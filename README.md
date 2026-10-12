@@ -9,7 +9,7 @@
 面向 **DeepSeek Harness（DSH）0.2.0-rc.2** 的只读 Obsidian 待办插件。它扫描配置的 Vault 中的 Markdown 复选框任务，提供两个工具：`obsidian_tasks`（对话内文本查询）与 `study_dashboard`（生成自包含、可交互的 HTML 任务看板）。
 
 > 本仓库只发布 DSH 插件，不包含个人学习简报官 CLI。不提供番茄钟、Git 学习统计、新闻聚合或简报生成。
-
+#声明：面向 DeepSeek Harness（DSH）的只读 Obsidian 待办插件：在对话里查待办，或把待办渲染成自包含的可交互 HTML 任务看板。本人只是一名计算机专业大一新生，可能有不好的地方，欢迎各位大佬指点 🙏
 ## 功能
 
 - 只读扫描 Obsidian Vault 中的 `.md` 笔记，识别 `- [ ]`、`* [x]` 等任务行。
