@@ -1,0 +1,13 @@
+- insert:
+    - id: dsh-study-daily
+      name: '@pystay/dsh-study-daily'
+      config:
+        vault_path: ''
+        max_notes: 200
+        max_items: 20
+        project_filters: []
+        group_by: priority
+        show_stale_days: 7
+        # 留空 vault_path 时使用默认库（用户主目录下 Documents/Obsidian）；
+        # 目录不存在会自动创建并写入示例笔记，实现零配置即用。
+        create_vault_if_missing: true
