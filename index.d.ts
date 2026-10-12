@@ -18,6 +18,6 @@ export interface PluginConfig {
   dashboard_path?: string;
 }
 
-export declare const name: '@pystay/dsh-study-daily';
+export declare const name: '@mmop/dsh-study-daily';
 export declare const inject: readonly ['tools'];
 export declare function apply(ctx: Context, config?: PluginConfig): void;

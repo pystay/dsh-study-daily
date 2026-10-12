@@ -42,7 +42,7 @@ describe('standalone package contract', () => {
     const patch = await readFile(new URL('../cordis.patch.yml', import.meta.url), 'utf8');
     const source = await readFile(new URL('../index.js', import.meta.url), 'utf8');
 
-    assert.equal(packageJson.name, '@pystay/dsh-study-daily');
+    assert.equal(packageJson.name, '@mmop/dsh-study-daily');
     assert.equal(packageJson.private, undefined);
     assert.equal(packageJson.dsh.bundle.patch, './cordis.patch.yml');
     assert.equal(packageJson.peerDependencies['@deepseek-ai/dsh-tools'], '0.2.0-rc.2');
@@ -52,7 +52,7 @@ describe('standalone package contract', () => {
     assert.doesNotMatch(source, /personal-learning-briefing-officer|link:\.\.\/\.\./);
     assert.match(source, /from '@deepseek-ai\/dsh-tools'/);
     assert.match(patch, /id: dsh-study-daily/);
-    assert.match(patch, /name: '@pystay\/dsh-study-daily'/);
+    assert.match(patch, /name: '@mmop\/dsh-study-daily'/);
     assert.match(patch, /max_notes: 200/);
     assert.match(patch, /group_by: priority/);
   });

@@ -1,7 +1,7 @@
 import { defineTool } from '@deepseek-ai/dsh-tools';
 import { registerDashboardTool, registerObsidianTool } from './core.js';
 
-export const name = '@pystay/dsh-study-daily';
+export const name = '@mmop/dsh-study-daily';
 export const inject = ['tools'];
 
 export function apply(ctx, config = {}) {

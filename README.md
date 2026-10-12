@@ -32,7 +32,13 @@
 
 ## 安装
 
-将 GitHub bundle 添加到目标 profile（此处以 `web` 为例）：
+**方式一：从 npm 安装（推荐）**
+
+```sh
+dsh plugin --profile web add @mmop/dsh-study-daily
+```
+
+**方式二：从 GitHub 安装**
 
 ```sh
 dsh plugin --profile web add "github:pystay/dsh-study-daily#main"

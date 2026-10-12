@@ -1,5 +1,5 @@
 {
-  "name": "@pystay/dsh-study-daily",
+  "name": "@mmop/dsh-study-daily",
   "version": "0.2.0",
   "description": "Read-only Obsidian task search tool for DeepSeek Harness",
   "type": "module",
@@ -25,6 +25,9 @@
     "LICENSE"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
   },

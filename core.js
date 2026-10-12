@@ -15,7 +15,7 @@ const HEADING = /^\s{0,3}(#{1,6})\s+(.*)$/;
 const DEFAULT_VAULT_DIRNAME = 'Obsidian';
 const WELCOME_NOTE = `# 欢迎使用 DSH Study Daily
 
-本 Vault 由 @pystay/dsh-study-daily 插件在首次使用时自动创建。
+本 Vault 由 @mmop/dsh-study-daily 插件在首次使用时自动创建。
 在下面用 Markdown 复选框记录你的待办，插件会自动汇总：
 
 - [ ] 示例：读一篇论文 (P2) #学习
@@ -908,7 +908,7 @@ ${TASK_BOARD_CSS}
   <header class="hero">
     <h1>🗂️ Obsidian 任务看板</h1>
     <p>${escapeHtml(subtitle)}</p>
-    <p class="dim">生成于 ${escapeHtml(meta.generated_at)} ｜ 由 @pystay/dsh-study-daily 生成（只读，不改笔记）</p>
+    <p class="dim">生成于 ${escapeHtml(meta.generated_at)} ｜ 由 @mmop/dsh-study-daily 生成（只读，不改笔记）</p>
   </header>
   <section class="kpis">
     <div class="kpi"><div class="k">任务总数</div><div class="v">${summary.total}</div></div>

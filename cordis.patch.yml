@@ -1,6 +1,6 @@
 - insert:
     - id: dsh-study-daily
-      name: '@pystay/dsh-study-daily'
+      name: '@mmop/dsh-study-daily'
       config:
         vault_path: ''
         max_notes: 200
