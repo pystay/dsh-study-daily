@@ -1,5 +1,11 @@
 # DSH Study Daily
 
+[![CI](https://github.com/pystay/dsh-study-daily/actions/workflows/ci.yml/badge.svg)](https://github.com/pystay/dsh-study-daily/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/pystay/dsh-study-daily?sort=semver)](https://github.com/pystay/dsh-study-daily/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/node-%5E22.19.0%20%7C%7C%20%3E%3D24.0.0-brightgreen)](package.json)
+[![DSH](https://img.shields.io/badge/DSH-0.2.0--rc.2-blue)](package.json)
+
 面向 **DeepSeek Harness（DSH）0.2.0-rc.2** 的只读 Obsidian 待办插件。它扫描配置的 Vault 中的 Markdown 复选框任务，提供两个工具：`obsidian_tasks`（对话内文本查询）与 `study_dashboard`（生成自包含、可交互的 HTML 任务看板）。
 
 > 本仓库只发布 DSH 插件，不包含个人学习简报官 CLI。不提供番茄钟、Git 学习统计、新闻聚合或简报生成。
