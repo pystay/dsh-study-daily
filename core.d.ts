@@ -28,6 +28,8 @@ export interface NormalizedConfig {
   group_by: 'project' | 'priority' | 'tag';
   show_stale_days: number;
   create_vault_if_missing: boolean;
+  /** 任务看板输出路径；留空用默认位置 */
+  dashboard_path: string;
 }
 
 export interface ReadResult {
@@ -43,6 +45,7 @@ export interface NormalizedArguments {
   query: string;
   includeCompleted: boolean;
   vaultPath: string;
+  outputPath: string;
 }
 
 export interface ToolDefinitionLike {
@@ -90,4 +93,33 @@ export function registerObsidianTool(
   todayProvider?: () => string,
   defaultPathProvider?: () => string,
 ): void;
+
+// ── 任务看板（study_dashboard）──
+export function defaultDashboardPath(): string;
+export function escapeHtml(text: string): string;
+export function escapeJsonForScript(json: string): string;
+export function buildBoardContext(
+  summary: TodoSummary,
+  meta: { vault: string; range?: string; generated_at: string; stale_days?: number; storage_key?: string },
+): Record<string, unknown>;
+export function renderTaskBoardHtml(
+  summary: TodoSummary,
+  meta: { vault: string; range?: string; generated_at: string; stale_days?: number; storage_key?: string },
+): string;
+export function createDashboardToolDefinition(
+  config: NormalizedConfig,
+  defineTool: (definition: ToolDefinitionLike) => ToolDefinitionLike,
+  todayProvider?: () => string,
+  defaultPathProvider?: () => string,
+  dashboardPathProvider?: () => string,
+): ToolDefinitionLike;
+export function registerDashboardTool(
+  ctx: PluginContextLike,
+  rawConfig: Record<string, unknown>,
+  defineTool: (definition: ToolDefinitionLike) => ToolDefinitionLike,
+  todayProvider?: () => string,
+  defaultPathProvider?: () => string,
+  dashboardPathProvider?: () => string,
+): void;
+
 export const internals: Record<string, unknown>;

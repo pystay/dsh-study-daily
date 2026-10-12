@@ -10,7 +10,10 @@
 
 ## 数据访问边界
 
-插件读取 Markdown 文件以汇总待办，**不修改或删除已有笔记**。唯一的写入行为是：当解析出的 Vault 目录不存在且 `create_vault_if_missing` 为 `true`（默认）时，创建该目录并写入一份示例欢迎笔记；显式设为 `false` 可完全关闭写入。
+插件读取 Markdown 文件以汇总待办，**不修改或删除已有笔记**。写入行为只有两处，且都不改动笔记：
+
+1. 当解析出的 Vault 目录不存在且 `create_vault_if_missing` 为 `true`（默认）时，创建该目录并写入一份示例欢迎笔记；显式设为 `false` 可完全关闭。
+2. `study_dashboard` 工具会在 **Vault 之外**写出一份看板 HTML（默认 `~/.dsh-study-daily/dashboard.html`）。该页面自包含、零外链；任务文本经 HTML 转义、上下文数据岛经 JSON 转义，防 XSS 与 `</script>` 逃逸。
 
 扫描路径的解析优先级为：**插件配置中的 `vault_path` ＞ 工具参数 `vault_path` ＞ 默认库路径（`~/Documents/Obsidian`）**。
 

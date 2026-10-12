@@ -14,6 +14,8 @@ export interface PluginConfig {
   show_stale_days?: number;
   /** Create the Vault directory (with a sample note) when it is missing; default true. */
   create_vault_if_missing?: boolean;
+  /** Where `study_dashboard` writes the task board HTML; empty means ~/.dsh-study-daily/dashboard.html */
+  dashboard_path?: string;
 }
 
 export declare const name: '@pystay/dsh-study-daily';

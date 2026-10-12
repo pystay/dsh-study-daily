@@ -8,7 +8,9 @@ import {
   collectNotes,
   createToolDefinition,
   daysBetween,
+  defaultDashboardPath,
   defaultVaultPath,
+  escapeJsonForScript,
   extractPriority,
   extractTags,
   formatSummary,
@@ -16,7 +18,9 @@ import {
   normalizeConfig,
   parseMarkdownTasks,
   readTodoSummary,
+  registerDashboardTool,
   registerObsidianTool,
+  renderTaskBoardHtml,
   wildcardToRegExp,
 } from '../core.js';
 
@@ -249,5 +253,74 @@ describe('Vault scanning and aggregation', () => {
     assert.equal(defaultVaultPath(), path.join(os.homedir(), 'Documents', 'Obsidian'));
     assert.equal(normalizeConfig({}).create_vault_if_missing, true);
     assert.equal(normalizeConfig({ create_vault_if_missing: false }).create_vault_if_missing, false);
+  });
+});
+
+describe('Task board (study_dashboard)', () => {
+  it('renders a self-contained board with the widget and escaped task text', async () => {
+    const vault = await makeVault();
+    await writeFile(
+      path.join(vault, 'tasks.md'),
+      '# 工作\n- [ ] <script>alert(1)</script> !!P1!! @2030-01-01 #tag',
+    );
+    const result = await readTodoSummary(normalizeConfig({ vault_path: vault }), '2026-10-11');
+    const html = renderTaskBoardHtml(result.summary, {
+      vault,
+      generated_at: '2026-10-11T00:00:00.000Z',
+      stale_days: 7,
+    });
+
+    assert.match(html, /^<!DOCTYPE html>/);
+    for (const marker of ['id="dsh-tw"', 'id="dsh-tw-fab"', 'id="dsh-tw-plan"', 'id="dsh-tw-replan"', 'id="dsh-tw-context"']) {
+      assert.ok(html.includes(marker), `缺少 ${marker}`);
+    }
+    // 任务正文被 HTML 转义，且不引入任何外链资源（自包含）
+    assert.doesNotMatch(html, /<script>alert/);
+    assert.match(html, /&lt;script&gt;/);
+    assert.doesNotMatch(html, /<link[^>]+href="http/);
+  });
+
+  it('data island survives </script> and stays JSON-parseable', async () => {
+    const vault = await makeVault();
+    await writeFile(path.join(vault, 'x.md'), '- [ ] </script><b>bold</b>');
+    const result = await readTodoSummary(normalizeConfig({ vault_path: vault }), '2026-10-11');
+    const html = renderTaskBoardHtml(result.summary, { vault, generated_at: 'x' });
+
+    const match = html.match(/<script type="application\/json" id="dsh-tw-context">([\s\S]*?)<\/script>/);
+    assert.ok(match);
+    const ctx = JSON.parse(match[1]);
+    assert.ok(Array.isArray(ctx.tasks));
+    assert.equal(ctx.tasks[0].text, '</script><b>bold</b>');
+  });
+
+  it('escapeJsonForScript blocks </script> breakout', () => {
+    const escaped = escapeJsonForScript('{"a":"</script>"}');
+    assert.doesNotMatch(escaped, /<\/script>/);
+    assert.match(escaped, /\\u003c\/script\\u003e/);
+  });
+
+  it('study_dashboard registers and writes the board to disk', async () => {
+    const vault = await makeVault();
+    await writeFile(path.join(vault, 'tasks.md'), '- [ ] Configured task');
+    let registered = null;
+    const ctx = { tools: { register(tool) { registered = tool; } } };
+    registerDashboardTool(
+      ctx,
+      { vault_path: vault },
+      (definition) => definition,
+      () => '2026-10-11',
+      () => vault,
+      () => path.join(vault, 'board.html'),
+    );
+    assert.equal(registered.name, 'study_dashboard');
+
+    const out = await registered.execute({}, { signal: new AbortController().signal });
+    assert.match(out, /board\.html/);
+    const html = await readFile(path.join(vault, 'board.html'), 'utf8');
+    assert.match(html, /Configured task/);
+  });
+
+  it('default dashboard path lives under the home directory (not in the Vault)', () => {
+    assert.equal(defaultDashboardPath(), path.join(os.homedir(), '.dsh-study-daily', 'dashboard.html'));
   });
 });
